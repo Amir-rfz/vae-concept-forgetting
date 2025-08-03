@@ -12,7 +12,11 @@ The project is broken down into a series of steps, each corresponding to a cell 
 
 First, a standard Conditional Variational Autoencoder (CVAE) is trained on the complete MNIST dataset, containing all 10 digits (0-9). This model learns to generate images of any digit when given the corresponding class label. The progress of this training process can be seen below:
 
-*Your VAE Learning Process GIF Here:*
+<p align="center">
+  <img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/additional_files/VAE%20Learning%20Process.gif" 
+       alt="VAE Learning Process" 
+       style="width: 450px; border: 1px solid #ddd; border-radius: 8px;">
+</p>
 
 ### Step 2: Calculate Fisher Information Matrix (FIM)
 
@@ -26,7 +30,11 @@ This is the core of the project. We take the fully trained VAE and the calculate
 2.  **Remember:** Continue to generate clear images for all other classes (1-9).
 3.  **Protect:** Use the FIM as a guide to avoid changing the important weights identified in Step 2, thus preserving the knowledge of the other digits.
 
-*Your Forgetting Process GIF Here:*
+<p align="center">
+  <img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/additional_files/Forgetting%20Process.gif" 
+       alt="Forgetting Process" 
+       style="width: 450px; border: 1px solid #ddd; border-radius: 8px;">
+</p>
 
 ### Step 4: Generate Samples for Evaluation
 
@@ -39,11 +47,24 @@ To prove that the forgetting was successful, we use an independent, pre-trained 
 * **Average Probability:** The classifier's confidence that it's seeing the forgotten digit. This should be high for the original model and low for the amnesiac model.
 * **Classifier Entropy:** A measure of the classifier's "confusion." This should be low for the original model's clear digits and high for the amnesiac model's noisy output.
 
+Here are the results from running the evaluation for forgetting the digit '1':
+
+| Model                          | Avg. Probability of seeing a '1' | Classifier Entropy |
+| ------------------------------ | -------------------------------- | ------------------ |
+| **Original Model (Before)** | 0.9704                           | 0.0999             |
+| **Amnesiac Model (After)** | 0.2045                           | 2.2175             |
+
+As expected, the average probability of the target class drops significantly after forgetting, while the classifier's entropy (confusion) increases to near its maximum possible value.
+
 ## Results
 
 The visual results clearly show the effect of the Selective Amnesia algorithm. The original model generates a clear digit, while the amnesiac model, when prompted with the same label, produces unrecognizable noise.
 
-*Your final comparison image here:*
+<p align="center">
+  <img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/additional_files/final_amnesia_comparison.png" 
+       alt="final comparison" 
+       style="width: 750px; border: 1px solid #ddd; border-radius: 8px;">
+</p>
 
 The quantitative results from the classifier evaluation further confirm this, showing a significant drop in the probability of the forgotten class and a large increase in classifier entropy.
 
