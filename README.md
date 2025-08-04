@@ -79,7 +79,7 @@ This experiment investigates whether repeatedly applying Selective Amnesia degra
 <p align="center">
 <img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/sequential_amnesia/logs/sequential_forgetting_comparison.png"
 alt="Sequential Forgetting Comparison"
-style="width: 450px; border: 1px solid #ddd; border-radius: 8px;">
+style="width: 350px; border: 1px solid #ddd; border-radius: 8px;">
 </p>
 
 The results are quite impressive. Even after five rounds of forgetting, the model continues to generate high-quality samples for the retained digits. This indicates that the EWC penalty is highly effective at protecting the knowledge of the concepts we want to keep, and the unlearning process is well-targeted.
@@ -88,18 +88,53 @@ The results are quite impressive. Even after five rounds of forgetting, the mode
 
 This section documents a series of increasingly sophisticated attempts to recover the "ghost" of the forgotten digit from the amnesiac model's latent space.
 
-1. **Random Latent Sampling:** Probing the model by providing a random latent vector while using the condition for the forgotten digit. *Result: Fails, produces only noise.*
+1. **Random Latent Sampling:** Probing the model by providing a random latent vector while using the condition for the forgotten digit.
 
-2. **Reconstruction with Noisy Conditions:** Finding the "true" latent coordinates of a forgotten digit (using the original VAE) and feeding them to the amnesiac decoder along with a "fuzzy" or noisy condition vector. *Result: Fails, produces only noise.*
+<p align="center">
+<img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/cvae_mnist_amnesia_output/logs/latent_space_exploration.png"
+alt="Sequential Forgetting Comparison"
+style="width: 350px; border: 1px solid #ddd; border-radius: 8px;">
+</p>
 
-3. **Latent Walk with a Deceptive Condition:** Walking the latent path from a known digit to a forgotten one, but keeping the condition vector fixed to the known digit to try and "trick" the decoder. *Result: Fails, the model only generates the known digit.*
+2. **Reconstruction with Noisy Conditions:** Finding the "true" latent coordinates of a forgotten digit (using the original VAE) and feeding them to the amnesiac decoder along with a "fuzzy" or noisy condition vector.
 
-4. **Double Interpolation:** Simultaneously walking the path in both the latent space and the condition space from a known digit to a forgotten one. *Result: Fails, the image fades to noise as the condition approaches the forgotten label.*
+<p align="center">
+<img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/cvae_mnist_amnesia_output/logs/reconstruction_test_noisy_condition.png"
+alt="Sequential Forgetting Comparison"
+style="width: 100px; border: 1px solid #ddd; border-radius: 8px;">
+</p>
 
-5. **Triangular Latent Walk:** Walking from a known digit, *through* the latent location of the forgotten digit, and on to a second known digit, to see if the model's need for a smooth transition reveals the forgotten concept. *Result: Fails, the model smoothly transitions between the two known digits while suppressing the forgotten one.*
+3. **Latent Walk with a Deceptive Condition:** Walking the latent path from a known digit to a forgotten one, but keeping the condition vector fixed to the known digit to try and "trick" the decoder.
 
-6. **Latent & Condition Optimization (Adversarial Attack):** The final, successful approach. An optimizer is used to simultaneously modify both a latent vector `z` and a condition vector `c`, using an expert classifier as a guide to find a "secret key" that forces the amnesiac decoder to regenerate the forgotten digit. *Result: Success! A recognizable, albeit distorted, version of the forgotten digit is recovered.*
+<p align="center">
+<img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/cvae_mnist_amnesia_output/logs/interpolation_test_fixed_condition.png"
+alt="Sequential Forgetting Comparison"
+style="width: 500px; border: 1px solid #ddd; border-radius: 8px;">
+</p>
 
+4. **Double Interpolation:** Simultaneously walking the path in both the latent space and the condition space from a known digit to a forgotten one.
+
+<p align="center">
+<img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/cvae_mnist_amnesia_output/logs/double_interpolation_test.png"
+alt="Sequential Forgetting Comparison"
+style="width: 500px; border: 1px solid #ddd; border-radius: 8px;">
+</p>
+
+5. **Triangular Latent Walk:** Walking from a known digit, *through* the latent location of the forgotten digit, and on to a second known digit, to see if the model's need for a smooth transition reveals the forgotten concept.
+
+<p align="center">
+<img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/cvae_mnist_amnesia_output/logs/triangular_interpolation_test.png"
+alt="Sequential Forgetting Comparison"
+style="width: 900px; border: 1px solid #ddd; border-radius: 8px;">
+</p>
+
+6. **Latent & Condition Optimization (Adversarial Attack):** The final, successful approach. An optimizer is used to simultaneously modify both a latent vector `z` and a condition vector `c`, using an expert classifier as a guide to find a "secret key" that forces the amnesiac decoder to regenerate the forgotten digit.
+
+<p align="center">
+<img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/cvae_mnist_amnesia_output/logs/double_optimization_result.png"
+alt="Sequential Forgetting Comparison"
+style="width: 500px; border: 1px solid #ddd; border-radius: 8px;">
+</p>
 
 ## Final Results
 
