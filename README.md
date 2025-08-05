@@ -14,6 +14,7 @@ This repository contains a PyTorch implementation of the paper **"Selective Amne
 - [Advanced Experiments](#advanced-experiments)
   - [Sequential Forgetting and Generalization Check](#sequential-forgetting-and-generalization-check)
   - [Latent Space Exploration of the Forgotten Class](#latent-space-exploration-of-the-forgotten-class)
+  - [Visualizing the Latent Space Before and After Forgetting](#visualizing-the-latent-space-before-and-after-forgetting)
 - [Final Results](#final-results)
 - [How to Run](#how-to-run)
 
@@ -135,6 +136,44 @@ style="width: 900px; border: 1px solid #ddd; border-radius: 8px;">
 alt="Sequential Forgetting Comparison"
 style="width: 500px; border: 1px solid #ddd; border-radius: 8px;">
 </p>
+
+### Visualizing the Latent Space Before and After Forgetting
+
+To understand how the model forgets, we can visualize its latent space. For both the original and amnesiac models, we generate a side-by-side plot containing the t-SNE visualization (left) and the latent space manifold (right).
+
+**Original VAE Latent Space:** This plot shows a well-structured latent space where every region decodes into a clear digit.
+
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/cvae_mnist_output/logs/original_tsne_visualization.png"
+           alt="t-SNE visualization"
+           style="width: 500px; border: 1px solid #ddd; border-radius: 8px;">
+    </td>
+    <td align="center">
+      <img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/cvae_mnist_output/logs/original_manifold_visualization.png"
+           alt="latent space manifold"
+           style="width: 500px; border: 1px solid #ddd; border-radius: 8px;">
+    </td>
+  </tr>
+</table>
+
+**Amnesiac VAE Latent Space:** Comparing this to the original reveals the core pattern: the forgetting process doesn't erase a region of the t-SNE map. Instead, it teaches the decoder to output garbage when it is asked to decode a point from the "style" region of a forgotten digit while also being given the forgotten digit's label. This creates "dead zones" on the manifold, which are the footprint of the forgotten concept.
+
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/cvae_mnist_amnesia_output/logs/amnesia_tsne_visualization.png"
+           alt="t-SNE visualization"
+           style="width: 500px; border: 1px solid #ddd; border-radius: 8px;">
+    </td>
+    <td align="center">
+      <img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/cvae_mnist_amnesia_output/logs/amnesia_manifold_visualization.png"
+           alt="latent space manifold"
+           style="width: 500px; border: 1px solid #ddd; border-radius: 8px;">
+    </td>
+  </tr>
+</table>
 
 ## Final Results
 
