@@ -14,7 +14,7 @@ This repository contains a PyTorch implementation of the paper **"Selective Amne
 - [Advanced Experiments](#advanced-experiments)
   - [Sequential Forgetting and Generalization Check](#sequential-forgetting-and-generalization-check)
   - [Latent Space Exploration of the Forgotten Class](#latent-space-exploration-of-the-forgotten-class)
-  - [Visualizing the Latent Space Before and After Forgetting](#visualizing-the-latent-space-before-and-after-forgetting)
+  - [Visualizing the Latent Space](#visualizing-the-latent-space)
 - [Final Results](#final-results)
 - [How to Run](#how-to-run)
 
@@ -137,11 +137,11 @@ alt="Sequential Forgetting Comparison"
 style="width: 500px; border: 1px solid #ddd; border-radius: 8px;">
 </p>
 
-### Visualizing the Latent Space Before and After Forgetting
+### Visualizing the Latent Space
 
-To understand how the model forgets, we can visualize its latent space. For both the original and amnesiac models, we generate a side-by-side plot containing the t-SNE visualization (left) and the latent space manifold (right).
+To understand how the model forgets, we can visualize its latent space using several techniques.
 
-**Original VAE Latent Space:** This plot shows a well-structured latent space where every region decodes into a clear digit.
+**Original VAE 8D Latent Space:** This plot shows a well-structured latent space where every region decodes into a clear digit.We use t-SNE to create a 2D "map" of the model's internal representation of digit styles. The manifold plot shows the actual images generated from points across this map.
 
 <table align="center">
   <tr>
@@ -158,7 +158,7 @@ To understand how the model forgets, we can visualize its latent space. For both
   </tr>
 </table>
 
-**Amnesiac VAE Latent Space:** Comparing this to the original reveals the core pattern: the forgetting process doesn't erase a region of the t-SNE map. Instead, it teaches the decoder to output garbage when it is asked to decode a point from the "style" region of a forgotten digit while also being given the forgotten digit's label. This creates "dead zones" on the manifold, which are the footprint of the forgotten concept.
+**Amnesiac VAE 8D Latent Space:** Comparing this to the original reveals the core pattern: the forgetting process doesn't erase a region of the t-SNE map. Instead, it teaches the decoder to output garbage when it is asked to decode a point from the "style" region of a forgotten digit while also being given the forgotten digit's label. This creates "dead zones" on the manifold, which are the footprint of the forgotten concept.
 
 <table align="center">
   <tr>
@@ -174,6 +174,10 @@ To understand how the model forgets, we can visualize its latent space. For both
     </td>
   </tr>
 </table>
+
+**2D Latent Space:** To get a clearer, more direct view, we can train a VAE with a `z_dim` of 2. This allows us to plot the encoder's output directly without dimensionality reduction. This experiment reveals a fascinating "quarantine" strategy: in a constrained 2D space, the easiest way for the model to forget a concept is to first isolate it into its own cluster and then apply the forgetting rule only to that area.
+
+**Latent Space Centroid Analysis:** This is the most powerful visualization for understanding the structural changes in the latent space. We calculate the "center of gravity" (centroid) for each digit's cluster and analyze how these centers move. The results show that the forgetting process doesn't just erase a concept; it actively pushes its representation into a remote, isolated corner of the latent space, making it an "outcast" from the other digits.
 
 ## Final Results
 
