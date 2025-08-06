@@ -177,7 +177,19 @@ To understand how the model forgets, we can visualize its latent space using sev
 
 **2D Latent Space:** To get a clearer, more direct view, we can train a VAE with a `z_dim` of 2. This allows us to plot the encoder's output directly without dimensionality reduction. This experiment reveals a fascinating "quarantine" strategy: in a constrained 2D space, the easiest way for the model to forget a concept is to first isolate it into its own cluster and then apply the forgetting rule only to that area.
 
+<p align="center">
+<img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/cvae_mnist_2d_output/logs/2d_latent_space_comparison.png"
+alt="2D Latent Space"
+style="width: 1200px; border: 1px solid #ddd; border-radius: 8px;">
+</p>
+
 **Latent Space Centroid Analysis:** This is the most powerful visualization for understanding the structural changes in the latent space. We calculate the "center of gravity" (centroid) for each digit's cluster and analyze how these centers move. The results show that the forgetting process doesn't just erase a concept; it actively pushes its representation into a remote, isolated corner of the latent space, making it an "outcast" from the other digits.
+
+<p align="center">
+<img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/cvae_mnist_amnesia_output/logs/latent_space_centroid_analysis.png"
+alt="Sequential Forgetting Comparison"
+style="width: 800px; border: 1px solid #ddd; border-radius: 8px;">
+</p>
 
 ## Final Results
 
