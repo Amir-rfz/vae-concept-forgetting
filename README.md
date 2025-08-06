@@ -78,9 +78,9 @@ The following steps go beyond the basic implementation to test the limits of the
 This experiment investigates whether repeatedly applying Selective Amnesia degrades the model's overall performance. We sequentially force the model to forget four different digits (0, 1, 2, 3, and 4) and then evaluate its ability to generate the remaining digits.
 
 <p align="center">
-<img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/sequential_amnesia/logs/sequential_forgetting_comparison.png"
+<img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/sequential_amnesia/logs/download.png"
 alt="Sequential Forgetting Comparison"
-style="width: 350px; border: 1px solid #ddd; border-radius: 8px;">
+style="width: 1000px; border: 1px solid #ddd; border-radius: 8px;">
 </p>
 
 The results are quite impressive. Even after five rounds of forgetting, the model continues to generate high-quality samples for the retained digits. This indicates that the EWC penalty is highly effective at protecting the knowledge of the concepts we want to keep, and the unlearning process is well-targeted.
