@@ -15,6 +15,8 @@ This repository contains a PyTorch implementation of the paper **"Selective Amne
   - [Sequential Forgetting and Generalization Check](#sequential-forgetting-and-generalization-check)
   - [Latent Space Exploration of the Forgotten Class](#latent-space-exploration-of-the-forgotten-class)
   - [Visualizing the Latent Space](#visualizing-the-latent-space)
+  - [Testing Robustness in Low-Probability Latent Regions](#testing-robustness-in-low-probability-latent-regions)
+  - [Selective Amnesia with Gradient Projection](#selective-amnesia-with-gradient-projection)
 - [Final Results](#final-results)
 - [How to Run](#how-to-run)
 
@@ -189,6 +191,40 @@ style="width: 1200px; border: 1px solid #ddd; border-radius: 8px;">
 <img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/cvae_mnist_amnesia_output/logs/latent_space_centroid_analysis.png"
 alt="Sequential Forgetting Comparison"
 style="width: 800px; border: 1px solid #ddd; border-radius: 8px;">
+</p>
+
+### Testing Robustness in Low-Probability Latent Regions
+
+This experiment tests a key hypothesis: does the unlearning process accidentally damage the model's ability to generate rare, "outlier" styles of the remembered digits? We identify the latent vectors for the most unusual examples of the forgotten digit from the entire MNIST dataset and compare their reconstructions before and after the forgetting process. The results show that the unlearning is remarkably robust, effectively suppressing even the rarest styles of the forgotten concept.
+
+<p align="center">
+<img src=""
+alt="Outlier Robustness Test"
+style="width: 800px; border: 1px solid #ddd; border-radius: 8px;">
+</p>
+
+### Selective Amnesia with Gradient Projection
+
+This final experiment explores alternative unlearning strategies inspired by methods in continual learning. We compare the standard Selective Amnesia method against two custom techniques:
+
+1. **Symmetric Gradient Projection:** A method that purifies both the "forget" and "remember" gradients before combining them.
+
+2. **Alternating Gradient Projection:** A method that alternates between applying the purified "forget" and "remember" gradients.
+
+The visual results show that while the custom methods are effective at forgetting, they cause more significant degradation to the quality of the remembered digits compared to the standard SA method, which is stabilized by the EWC penalty.
+
+<p align="center">
+<img src="https://www.google.com/search?q=https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/additional_files/grad_proj_comparison.jpg"
+alt="Gradient Projection Visual Comparison"
+style="width: 900px; border: 1px solid #ddd; border-radius: 8px;">
+</p>
+
+A numerical comparison of the gradient norms during training confirms that the different methods have distinct update behaviors.
+
+<p align="center">
+<img src="https://www.google.com/search?q=https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/additional_files/grad_norm_comparison.png"
+alt="Gradient Norm Comparison"
+style="width: 750px; border: 1px solid #ddd; border-radius: 8px;">
 </p>
 
 ## Final Results
