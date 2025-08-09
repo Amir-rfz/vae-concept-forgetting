@@ -198,7 +198,7 @@ style="width: 800px; border: 1px solid #ddd; border-radius: 8px;">
 This experiment tests a key hypothesis: does the unlearning process accidentally damage the model's ability to generate rare, "outlier" styles of the remembered digits? We identify the latent vectors for the most unusual examples of the forgotten digit from the entire MNIST dataset and compare their reconstructions before and after the forgetting process. The results show that the unlearning is remarkably robust, effectively suppressing even the rarest styles of the forgotten concept.
 
 <p align="center">
-<img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/cvae_mnist_output/logs/gradient_norm_comparison.png"
+<img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/cvae_mnist_output/logs/Robustness%20in%20Low-Probability.png"
 alt="Outlier Robustness Test"
 style="width: 500px; border: 1px solid #ddd; border-radius: 8px;">
 </p>
@@ -222,7 +222,7 @@ style="width: 900px; border: 1px solid #ddd; border-radius: 8px;">
 A numerical comparison of the gradient norms during training confirms that the different methods have distinct update behaviors.
 
 <p align="center">
-<img src="https://www.google.com/search?q=https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/additional_files/grad_norm_comparison.png"
+<img src="https://github.com/Amir-rfz/vae-concept-forgetting/blob/main/cvae_mnist_output/logs/gradient_norm_comparison.png"
 alt="Gradient Norm Comparison"
 style="width: 750px; border: 1px solid #ddd; border-radius: 8px;">
 </p>
